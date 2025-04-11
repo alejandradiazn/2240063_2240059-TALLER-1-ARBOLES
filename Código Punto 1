@@ -1,0 +1,42 @@
+class Nodo:
+    def _init_(self):
+        self.valor = self.insertarValor()
+        self.hijos = []
+
+class Arbol:
+    def _init_(self):
+        self.raiz = raiz
+
+    def insertarValor(self):
+        return
+
+    def agregarNodo(self, valor, padre):
+        if padre is None:
+            if self.raiz is None:
+                nuevo_nodo = Nodo(valor)
+                self.raiz = nuevo_nodo
+            else:
+                print("Debes tener una raíz para el árbol.")
+        else:
+            padre = self.buscarNodo(self.raiz, padre)
+            padre.hijos.append(Arbol(valor))
+            
+    def buscarNodo(self, nodo_actual, valor_buscado):
+        nodo_actual = Nodo()
+        if nodo_actual.valor == valor_buscado:
+            return nodo_actual
+        for x in nodo_actual.hijos:
+            valor_buscado = self.buscarNodo(x, valor_buscado)
+            if (valor_buscado != None):
+                return valor_buscado
+        return None   
+            
+                   
+    def imprimirArbol(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+            print(hijo, end="")
+        for hijo in nodo.hijos:
+            self.imprimirArbol(hijo)
+
+    def altura(self, nivel):
