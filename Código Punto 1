@@ -4,8 +4,8 @@ class Nodo:
         self.hijos = []
 
 class Arbol:
-    def _init_(self):
-        self.raiz = raiz
+    def _init_(self, valorRaiz):
+        self.raiz = Nodo(valorRaiz) #Esto permite que el valor del nodo se None ¿No?
 
     def insertarValor(self):
         return
@@ -25,8 +25,8 @@ class Arbol:
         nodo_actual = Nodo()
         if nodo_actual.valor == valor_buscado:
             return nodo_actual
-        for x in nodo_actual.hijos:
-            valor_buscado = self.buscarNodo(x, valor_buscado)
+        for hijo in nodo_actual.hijos:
+            valor_buscado = self.buscarNodo(hijo, valor_buscado)
             if (valor_buscado != None):
                 return valor_buscado
         return None   
@@ -35,8 +35,30 @@ class Arbol:
     def imprimirArbol(self, nodo=None):
         if nodo is None:
             nodo = self.raiz
-            print(hijo, end="")
+            print(nodo.valor)
         for hijo in nodo.hijos:
             self.imprimirArbol(hijo)
 
-    def altura(self, nivel):
+    def altura(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+        
+        if len(nodo.hijos) == 0:
+            return 1
+        else:
+            altura_hijos = []
+            for hijo in nodo.hijos:
+                altura_hijos.append(self.altura(hijo))
+            return 1 + max(altura_hijos)
+        
+
+    def peso(self, nodo = None):
+        if nodo is None:
+            nodo = self.raiz
+        totalNodos = 1
+        for hijo in nodo.hijos:
+            totalNodos += self.peso(hijo)
+        return totalNodos
+
+            
+
