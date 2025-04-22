@@ -1,3 +1,5 @@
+#Alejandra Díaz Navarro 2240063 - Ana María Fernández 2240059
+
 from bigtree import Node
 from bigtree import print_tree
 
