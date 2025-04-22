@@ -4,9 +4,11 @@ class Nodo:
         self.valor = valor
         self.hijos = []
 
+#El orden máximo permitido corresponde al "orden" y orden grado máximo alcanzado corresponde al "grado".
 class Arbol:
-    def __init__(self, valorRaiz):
-        self.raiz = Nodo(valorRaiz) #Esto permite que el valor del nodo se None ¿No?
+    def __init__(self, valorRaiz, ordenMaximo):
+        self.raiz = Nodo(valorRaiz)
+        self.ordenMaximo = ordenMaximo
 
     
 
@@ -19,15 +21,21 @@ class Arbol:
                 print("Debes tener una raíz para el árbol.")
         else:
             padre = self.buscarNodo(self.raiz, padre)
-            padre.hijos.append(Arbol(valor))
+            if padre:
+                if len(padre.hijos) < self.ordenMaximo:
+                    padre.hijos.append(Arbol(valor, self.ordenMaximo))
+                else:
+                    print(f"El nodo {padre.valor} ya tiene el número máximo de hijos permitido ({self.ordenMaximo}).")
+            else:
+                print(f"No se encontró el nodo padre con valor {padre}.")
             
     def buscarNodo(self, nodo_actual, valor_buscado):
         if nodo_actual is None:
             return None
         if nodo_actual.valor == valor_buscado:
             return nodo_actual
-        for hijo_arbol in nodo_actual.hijos:  # hijo_arbol es un objeto Arbol ??? NEVERMIND FUNCIONA
-            resultado = self.buscarNodo(hijo_arbol.raiz, valor_buscado)  #TOCA PONER .RAIZ PARA RECONOICWER A HIJO COMO NODO
+        for hijo_arbol in nodo_actual.hijos:  
+            resultado = self.buscarNodo(hijo_arbol.raiz, valor_buscado)  
             if resultado:
                 return resultado
         return None
@@ -62,7 +70,7 @@ class Arbol:
             totalNodos += self.peso(hijo.raiz)
         return totalNodos
 
-###Fingiendo que el orden corresponde al grado
+
     def orden(self, nodo= None):
         if nodo is None:
             nodo = self.raiz
@@ -71,15 +79,17 @@ class Arbol:
             maxHijos = max(maxHijos, self.orden(hijo.raiz))   
         return maxHijos
 
+
 #Fragmento expuesto en consola.
 
 
 print("CREACIÓN DE ÁRBOL")
-valorRaiz = input("Ingrese el valor del nodo raiz.")
-arbol1 = Arbol(valorRaiz)
+valorRaiz = input("Ingrese el valor del nodo raiz: ")
+orden_max = int(input("Ingrese el orden máximo permitido (número máximo de hijos por nodo): "))
+arbol1 = Arbol(valorRaiz, orden_max)
 
 while True:
-    inpt = input("Ingrese el valor de un nodo y el valor de su padre separados por un espacio o 'fin' para dejar de agreagar nodos.")
+    inpt = input("Ingrese el valor de un nodo y el valor de su padre separados por una coma o 'fin' para dejar de agregar nodos: ")
     if inpt == "fin":
         break
     else:
@@ -90,13 +100,14 @@ while True:
                 padre = partes[1]
             arbol1.agregarNodo(hijo, padre)
 
-print("\nÁRBOL EN PREORDEN.")
+print("\nÁRBOL EN RECORRIDO PREORDEN.")
 arbol1.imprimirArbol()
 
 print("\nCARACTERÍSTICAS DEL ÁRBOL.")
 print(f"Peso del arbol: {arbol1.peso()}")
 print(f"Altura del arbol: {arbol1.altura()}")
-print(f"Orden del arbol: {arbol1.orden()}")
+print(f"Orden (grado máximo alcanzado): {arbol1.orden()}")
+print(f"Orden máximo permitido: {arbol1.ordenMaximo}")
 
 
 
