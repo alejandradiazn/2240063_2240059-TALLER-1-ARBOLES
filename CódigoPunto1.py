@@ -1,3 +1,4 @@
+#Alejandra Díaz Navarro 2240063 - Ana María Fernández 2240059
 #Árbol realizado con listas junto a sus correspondientes características.
 class Nodo:
     def __init__(self, valor):
